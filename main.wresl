@@ -1,0 +1,21 @@
+sequence CYCLE1 {model First order 1}
+
+model First {
+	define cms_cmday {value 86400.}
+	define cms_1000CMDAY {value cms_cmday*1000.}
+	
+	define cmday_cms {value 1/cms_cmday}
+	define Kilocmday_cms {value 1/cms_1000CMDAY}
+	include 'Misc\General.wresl'
+	include 'System\channel-table.wresl'
+	include 'System\delivery-table.wresl'
+	include 'System\inflow-table.wresl'
+	include 'System\reservoir-table.wresl'
+	include 'System\connectivity-table.wresl'
+	include 'System\weight-table.wresl'
+	
+	include 'MIF_Flood.wresl'
+	include 'wateruse.wresl'
+}
+
+

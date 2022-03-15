@@ -1,0 +1,18 @@
+define(fm) C_RD10 {upper 8000. kind 'FLOW-CHANNEL' units 'CMS'}
+define(fm) C_RD20 {upper 8000. kind 'FLOW-CHANNEL' units 'CMS'}
+define(fm) C_RD30 {upper 8000. kind 'FLOW-CHANNEL' units 'CMS'}
+define(fm) C_RD11 {upper 8000. kind 'FLOW-CHANNEL' units 'CMS'}
+define(fm) C_RD40 {upper 8000. kind 'FLOW-CHANNEL' units 'CMS'}
+define(fm) C_RD50 {upper 8000. kind 'FLOW-CHANNEL' units 'CMS'}
+define(fm) C_RD60 {upper 8000. kind 'FLOW-CHANNEL' units 'CMS'}
+
+define(fm) C_RD20_MIF {std kind 'FLOW-MIN-INSTREAM' units 'CMS'}
+define(fm) C_RD11_MIF {std kind 'FLOW-MIN-INSTREAM' units 'CMS'}
+define(fm) C_RD60_MIF {std kind 'FLOW-MIN-INSTREAM' units 'CMS'}
+define(fm) C_RD20_ADD {std kind 'FLOW-EXC-INSTREAM' units 'CMS'}
+define(fm) C_RD11_ADD {std kind 'FLOW-EXC-INSTREAM' units 'CMS'}
+define(fm) C_RD60_ADD {std kind 'FLOW-EXC-INSTREAM' units 'CMS'}
+
+goal(fm) C_RD20total {C_RD20($m)=C_RD20_MIF($m)+C_RD20_ADD($m)}
+goal(fm) C_RD11total {C_RD11($m)=C_RD11_MIF($m)+C_RD11_ADD($m)}
+goal(fm) C_RD60total {C_RD60($m)=C_RD60_MIF($m)+C_RD60_ADD($m)}

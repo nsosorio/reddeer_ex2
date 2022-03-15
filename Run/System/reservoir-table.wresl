@@ -1,0 +1,44 @@
+/*
+ * Long term Glennifer Lake reservoir operating rules include the definition of the maximum storage capacity during flood operation,
+ * which is set to 949.5 m, and the dead storage zone at 926.0 m, which is the minimum allowable operating level. 
+ * Other key elevations are selected to coincide with the breaking points in the outflow vs capacity curve,
+ * so as to ensure accurate integration of the outflow capacity for each simulated time step (i.e. 940.5, 942 and 944 m). 
+ * The model reads the elevation points in the reservoir zones for the end of each time step,
+ * and applies the outflow capacities that are read from the outflow vs elevation curve for each zone elevation.
+ */
+define(fm) S3level1 {value 16651.51} ! Dead storage at 926 m
+define(fm) S3_1 {std kind 'STORAGE-ZONE' units '1000M3'}
+goal(fm) S3Zone1 {S3_1($m) < S3level1($m)}
+
+define(fm) S3level2 {value 109485.14}  ! normal water level (940.0 m)
+define(fm) S3_2 {std kind 'STORAGE-ZONE' units '1000M3'}
+goal(fm) S3Zone2 {S3_2($m) < S3level2-S3level1($m)}
+
+define(fm) S3level3 {value 132350.27}  ! normal water level (942.0 m)
+define(fm) S3_3 {std kind 'STORAGE-ZONE' units '1000M3'}
+goal(fm) S3Zone3 {S3_3($m) < S3level3-S3level2($m)}
+
+define(fm) S3level4 {value 158311.26} ! normal water level (944.0 m)
+define(fm) S3_4 {std kind 'STORAGE-ZONE' units '1000M3'}
+goal(fm) S3Zone4 {S3_4($m) < S3level4-S3level3($m)}
+
+define(fm) S3level5 {value 257090.3} ! Maximum permissible (949.5 m)
+define(fm) S3_5 {std kind 'STORAGE-ZONE' units '1000M3'}
+goal(fm) S3Zone5 {S3_5($m) < S3level5-S3level4($m)}
+
+define(fm) S3 {std kind 'STORAGE' units '1000M3'}
+goal(fm) storage3 {S3($m)=S3_1($m)+S3_2($m)+S3_3($m)+S3_4($m)+S3_5($m)}
+!define F3 {std kind 'FLOW-SPILL-NON-RECOV' units 'CFS'}
+!define E3 {lower unbounded kind 'EVAPORATION' units 'CFS'}
+!define A3 {std kind 'SURFACE-AREA' units 'ACRES'}
+
+!define evap_S3 {timeseries kind 'EVAPORATION-RATE' units 'IN'}
+!define A3last {select area from res_info given storage=1000*S3(-1) use linear where res_num=3}
+!define A3forward {select area from res_info given storage=1050*S3(-1) use linear where res_num=3}
+!define A3back {select area from res_info given storage=950*S3(-1) use linear where res_num=3}
+!define coefev3 {value (A3forward - A3back)/(100*max(0.01,S3(-1)))}
+!goal area3 {A3=A3last+1000*coefev3*S3-1000*coefev3*S3(-1)}
+!goal evap3 {E3*cfs_af=(evap_S3/24)*A3last+(evap_S3/24)*A3}
+
+define(fm) relcap3 {select discharge from glennifer_lake_res_info given volume=S3(-1) use linear}
+goal(fm) maxrelease3 {C_RD20($m)<relcap3($m)} ! Constrain Glennifer Lake outflow using maximum flow vs storage table

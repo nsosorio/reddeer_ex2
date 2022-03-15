@@ -1,0 +1,38 @@
+! 1.	Maintain minimum flow of 16 m3/s in Channels RD 20, RD 11 and RD 60 at all times;
+
+define(fm) C_MIF {value 16.}
+/* Zones are weight factors are set the same way for Channels 60 and 20,
+ * minimum flow of 16 m3/s and a small penalty of 1 for exceeding it:*/
+goal(fm) meetC_RD20_MIF {lhs C_RD20_MIF($m)
+				rhs C_MIF($m)
+				lhs<rhs penalty 9000.
+				lhs>rhs penalty 1.
+}
+
+goal(fm) meetC_RD11_MIF {lhs C_RD11_MIF($m)
+				rhs C_MIF($m)
+				lhs<rhs penalty 90000.
+				lhs>rhs penalty 1.
+}
+
+goal(fm) meetC_RD60_MIF {lhs C_RD60_MIF($m)
+				rhs C_MIF($m)
+				lhs<rhs penalty 9000.
+				lhs>rhs penalty 1.
+}
+! 3.	Keep the maximum flow through the City of Red Deer at 950 m3/s (Channel RD 11 and entry into the channel RD 40) at all times as much as possible during floods.
+/* The minimum flow Channel 11 has a high cost factor (penalty) for exceeding the full bank capacity of 950 m3/s,
+ * and also a high penalty for violating the minimum flow of 16 m3/s during low flow seasons.
+ */
+define(fm) C_Flood {value 950.}
+
+goal(fm) meetC_RD11 {lhs C_RD11($m)
+				rhs C_Flood($m)
+				lhs<rhs penalty 0.
+				lhs>rhs penalty 500000.
+}
+goal(fm) meetC_RD40 {lhs C_RD40($m)
+				rhs C_Flood($m)
+				lhs<rhs penalty 0.
+				lhs>rhs penalty 99999.
+} 

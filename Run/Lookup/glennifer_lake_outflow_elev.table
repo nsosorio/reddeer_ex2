@@ -1,0 +1,13 @@
+! Maximum outflow (m3/s)
+! Elevation (m)
+glennifer_lake_outflow_elev		
+max_outflow	elevation	storage
+0	926	16651510
+62.4	930	33466640
+78.6	940.5	109485140
+160	942	132350270
+550	944	158311260
+1125	946	187598750
+1875	948	220443410
+2625	950	257090300
+

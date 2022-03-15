@@ -1,0 +1,30 @@
+*.bak
+*.bat
+*.config
+*.config.ifs
+*.config.par
+*.jar
+*.lnk
+*.project
+*.dll
+*.dsc
+*.dsd
+*.dsk
+*.rcc
+*.sty
+*.xml
+
+# File names
+Error_evaluation.txt
+Error_solving.txt
+=FileCollector=.log
+shorts.txt
+xa.log
+=WreslCheck_main=.log
+
+# Folders
+config/
+DSS/output
+jre8/
+log4j/
+Run/External

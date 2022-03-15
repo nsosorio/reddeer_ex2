@@ -1,0 +1,10 @@
+Objective obj = {
+![C_RD20_MIF,5500],
+![C_RD11_MIF,5500],
+![C_RD60_MIF,5500],
+[D_RD100(fm), 70000],
+[S3_1(fm),76000*Kilocmday_cms],
+[S3_2(fm),94*Kilocmday_cms],
+[S3_3(fm),89*Kilocmday_cms],
+[S3_4(fm),82*Kilocmday_cms],
+[S3_5(fm),-75000*Kilocmday_cms],}

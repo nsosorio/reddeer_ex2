@@ -1,0 +1,2 @@
+define I2 {timeseries kind 'FLOW-INFLOW' units 'CMS'}
+define I5 {timeseries kind 'FLOW-INFLOW' units 'CMS'}

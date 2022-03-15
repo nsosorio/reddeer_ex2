@@ -1,0 +1,7 @@
+goal(fm) continuity2 {I2($m)-C_RD10($m)=0}
+goal(fm) continuity3 {C_RD10($m)-C_RD20($m)=S3($m)*Kilocmday_cms-S3($m-1)*Kilocmday_cms}
+goal(fm) continuity5 {C_RD20($m)+I5($m)-C_RD30($m)=0}
+goal(fm) continuity1 {C_RD30($m)-C_RD11($m)=0}
+goal(fm) continuity6 {C_RD11($m)-C_RD40($m)=0}
+goal(fm) continuity7 {C_RD40($m)-C_RD50($m)=0}
+goal(fm) continuity8 {C_RD50($m)-D_RD100($m)-C_RD60($m)=0}

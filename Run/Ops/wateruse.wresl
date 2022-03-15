@@ -1,0 +1,12 @@
+define(fm) water_use {
+	case may6 {
+		condition month == may .and. day == 6
+		value 100.
+	}
+	case otherwise {
+		condition always
+		value 15.
+	}		
+}
+
+goal(fm) meetD_RD100 {D_RD100($m) < water_use($m)}

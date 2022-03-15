@@ -1,0 +1,1 @@
+define fm {value int(14)} ! 14 days optimization window
