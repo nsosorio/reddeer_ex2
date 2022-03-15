@@ -1,0 +1,21 @@
+/*  Ot = (t/(2*Ts+t))*(It-1) + (t/(2*Ts+t))*It + ((Ts-t/2)/(Ts+t/2))*Ot-1
+ where Ts is known as the time to storage. This represents the averagel travel time along a river reach for given flow conditions.
+ Ts can be determined from a Ts vs Q lookup table or by using a functional form of the travel time vs flow curve as
+ Ts = Kts/((Ot-1 + Ot))^n.
+The routing coefficients Kts and n must previously be determined by finding the best fit curve for a given set of the available (TS, Q) coordinates.
+* Alternatively, TS can be determined for any given flow rate by linear interpolation from a table of (TS, Q) points.  
+*/
+define(fm) t {value 1}
+! Assume Ot-1 = Ot from previous cycle
+! This needs to be a state variable for it to be usable in a lookup function.
+define(fm) avg_C_RD30 {value (C_RD30($m-1) + C_RD30[SECOND]($m))/2} ! In the first iteration, assume Ot-1 = Ot which allows linearization of the routing equation
+define(fm) avg_C_RD40 {value (C_RD40($m-1) + C_RD40[SECOND]($m))/2} ! In the first iteration, assume Ot-1 = Ot which allows linearization of the routing equation
+define(fm) avg_C_RD50 {value (C_RD50($m-1) + C_RD50[SECOND]($m))/2} ! In the first iteration, assume Ot-1 = Ot which allows linearization of the routing equation
+
+define(fm) Ts_RD30 {select travel_time from travel_time_flow given flow=avg_C_RD30($m) use linear}
+define(fm) Ts_RD40 {select travel_time from travel_time_flow given flow=avg_C_RD40($m) use linear}
+define(fm) Ts_RD50 {select travel_time from travel_time_flow given flow=avg_C_RD50($m) use linear}
+
+goal(fm) routeC_RD30 {C_RD30($m) = (t/(2*Ts_RD30+t))*(C_RD20($m-1)) + (t/(2*Ts_RD30+t))*C_RD20($m) + ((Ts_RD30-t/2)/(Ts_RD30+t/2))*C_RD30($m-1)}
+goal(fm) routeC_RD40 {C_RD40($m) = (t/(2*Ts_RD40+t))*(C_RD30($m-1)) + (t/(2*Ts_RD40+t))*C_RD30($m) + ((Ts_RD40-t/2)/(Ts_RD40+t/2))*C_RD40($m-1)}
+goal(fm) routeC_RD50 {C_RD50($m) = (t/(2*Ts_RD50+t))*(C_RD40($m-1)) + (t/(2*Ts_RD50+t))*C_RD40($m) + ((Ts_RD50-t/2)/(Ts_RD50+t/2))*C_RD50($m-1)}

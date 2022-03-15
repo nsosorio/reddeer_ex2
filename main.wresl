@@ -1,21 +1,58 @@
-sequence CYCLE1 {model First order 1}
+sequence CYCLE1 {
+	model First
+	order 1
+}
 
-model First {
-	define cms_cmday {value 86400.}
-	define cms_1000CMDAY {value cms_cmday*1000.}
+sequence CYCLE2 {
+	model Second
+	order 2
+}
+
+sequence CYCLE3 {
+	model Third
+	order 2
+}
+
+group main {
+	define cms_cmday {value 86400.} ! 1 cubic meter per second = 86400 cubic meters per day = 86.4 1000CM3/day
+	define cms_1000CMDAY {value cms_cmday/1000.}
 	
 	define cmday_cms {value 1/cms_cmday}
-	define Kilocmday_cms {value 1/cms_1000CMDAY}
+	define Kilocmday_cms {value 1/cms_1000CMDAY}	
+}
+
+group foundation {
 	include 'Run\Misc\General.wresl'
 	include 'Run\System\channel-table.wresl'
 	include 'Run\System\delivery-table.wresl'
 	include 'Run\System\inflow-table.wresl'
 	include 'Run\System\reservoir-table.wresl'
 	include 'Run\System\connectivity-table.wresl'
-	include 'Run\System\weight-table.wresl'
-	
-	include 'Run\Ops\MIF_Flood.wresl'
-	include 'Run\Ops\wateruse.wresl'
+	include 'Run\System\weight-table.wresl'	
 }
 
+group ops {
+	include 'Run\Ops\MIF_Flood.wresl'
+	include 'Run\Ops\wateruse.wresl'	
+}
 
+model First {
+	include group main
+	include group foundation
+	include group ops
+	include 'Run\Hydrology\ssarr-routing-0.wresl'
+}
+
+model Second {
+	include group main
+	include group foundation
+	include group ops
+	include 'Run\Hydrology\ssarr-routing-1.wresl'
+}
+
+model Third {
+	include group main
+	include group foundation
+	include group ops
+	include 'Run\Hydrology\ssarr-routing-2.wresl'
+}
