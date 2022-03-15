@@ -6,16 +6,16 @@ model First {
 	
 	define cmday_cms {value 1/cms_cmday}
 	define Kilocmday_cms {value 1/cms_1000CMDAY}
-	include 'Misc\General.wresl'
-	include 'System\channel-table.wresl'
-	include 'System\delivery-table.wresl'
-	include 'System\inflow-table.wresl'
-	include 'System\reservoir-table.wresl'
-	include 'System\connectivity-table.wresl'
-	include 'System\weight-table.wresl'
+	include 'Run\Misc\General.wresl'
+	include 'Run\System\channel-table.wresl'
+	include 'Run\System\delivery-table.wresl'
+	include 'Run\System\inflow-table.wresl'
+	include 'Run\System\reservoir-table.wresl'
+	include 'Run\System\connectivity-table.wresl'
+	include 'Run\System\weight-table.wresl'
 	
-	include 'MIF_Flood.wresl'
-	include 'wateruse.wresl'
+	include 'Run\Ops\MIF_Flood.wresl'
+	include 'Run\Ops\wateruse.wresl'
 }
 
 
